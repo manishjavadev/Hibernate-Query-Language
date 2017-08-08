@@ -20,7 +20,7 @@ public class LoadManagerForHQL {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 
-		System.out.println("==Way2 === from Employee =============");
+		System.out.println("==Select all property =============");
 		// HQL Query Example Way1
 		String sql = "from Employee";
 		Query query = session.createQuery(sql);
@@ -28,18 +28,16 @@ public class LoadManagerForHQL {
 		for (Employee emp : allEmp) {
 			System.out.println(emp);
 		}
-		System.out.println("==Way2 === from Employee where id>5===");
+		System.out.println("==Select all property, but conditionaly ===");
 		// HQL Query Example Way2
-		String sql2 = "from Employee where id>5";
+		String sql2 = "from Employee where id > 5";
 		Query query2 = session.createQuery(sql2);
 		allEmp = (List<Employee>) query2.list();
 		for (Employee emp : allEmp) {
 			System.out.println(emp);
 		}
 
-		System.out.println("==Way3 === from Employee===");
-		System.out.println("==Way3 === setFirstResult===");
-		System.out.println("==Way3 === setMaxResults===");
+		System.out.println("==Select all property, but conditionaly with  setFirstResult and setMaxResults===");
 		// HQL Query Example Way3
 		String sql3 = "from Employee";
 		Query query3 = session.createQuery(sql3);
@@ -49,7 +47,7 @@ public class LoadManagerForHQL {
 		for (Employee emp : allEmp) {
 			System.out.println(emp);
 		}
-		System.out.println("==Way4 === Select firstName from Employee===");
+		System.out.println("==Select One Particular property=====");
 		// HQL Query Example Way4
 		String sql4 = "Select firstName from Employee";
 		Query query4 = session.createQuery(sql4);
@@ -58,16 +56,20 @@ public class LoadManagerForHQL {
 			System.out.println(empName);
 		}
 
-		System.out.println("==Way5 === Select firstName from Employee===");
+		System.out.println("==Select More than One Particular property=====");
 		// HQL Query Example Way5
 		String sql5 = "Select firstName,lastName from Employee";
 		Query query5 = session.createQuery(sql5);
 		List<Object[]> objNamedList = (List<Object[]>) query5.list();
 		for (Object[] objects : objNamedList) {
+			String firstName = (String) objects[0];
+			String lastName = (String) objects[1];
+		}
+		for (Object[] objects : objNamedList) {
 			System.out.println(Arrays.toString(objects));
 		}
 
-		// HQL Query Example Way4
+		// HQL Query Example Way6
 		String sql6 = "Select map(id,firstName) from Employee";
 		Query query6 = session.createQuery(sql6);
 		System.out.println(query6.list());
