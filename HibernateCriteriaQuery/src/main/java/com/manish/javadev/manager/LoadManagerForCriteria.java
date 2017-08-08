@@ -7,12 +7,15 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 
 import com.manish.javadev.model.Employee;
+import com.manish.javadev.model.EmployeeAddress;
 import com.manish.javadev.util.HibernateUtil;
 
 public class LoadManagerForCriteria {
@@ -26,33 +29,54 @@ public class LoadManagerForCriteria {
 		/**
 		 * ===========How to use Like With Criteria===========
 		 */
+		System.out.println("Like Query With Criteria");
 		Criteria criteria = session.createCriteria(Employee.class);
-		criteria.add(Restrictions.like("firstName", "Divya%"));
+		criteria.add(Restrictions.like("firstName", "Di%"));
 		List list = criteria.list();
 
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			String empName = (String) iterator.next();
-			System.out.println(empName);
+			Object object = iterator.next();
+			System.out.println(object);
+
+		}
+
+		/**
+		 * ===========How to use in("",""..) operator With Criteria===========
+		 */
+		System.out.println("\n\nin() operator With Criteria");
+		criteria = session.createCriteria(Employee.class);
+		criteria.add(Restrictions.in("firstName", new String[] { "Divya1",
+				"Manish1", "Raju" }));
+		list = criteria.list();
+
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			Object object = iterator.next();
+			System.out.println(object);
 
 		}
 
 		/**
 		 * ===========How to use Order By With Criteria===========
 		 */
+
+		System.out.println("\n\nOrder By Query With Criteria");
 		criteria = session.createCriteria(Employee.class);
-		criteria.add(Restrictions.like("firstName", "Divya%")).addOrder(Order.asc("salary"));
+		criteria.add(Restrictions.like("firstName", "Divya%")).addOrder(
+				Order.asc("salary"));
 		list = criteria.list();
 
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			String empName = (String) iterator.next();
-			System.out.println(empName);
-
+			Object object = iterator.next();
+			System.out.println(object);
 		}
+
 		/**
-		 * ===========How to use Projection=========== If you are adding two
-		 * property using set Projection then only last added projection will
-		 * consider
+		 * ===========How to use Projection===========
+		 * 
+		 * If you are adding more than one property using set Projection then
+		 * only last added projection will consider
 		 */
+		System.out.println("\n\nSingle property with Criteria");
 		criteria = session.createCriteria(Employee.class);
 		criteria.setProjection(Projections.property("firstName"));
 		criteria.setProjection(Projections.property("lastName"));
@@ -71,15 +95,18 @@ public class LoadManagerForCriteria {
 		 * ProjectionList
 		 * 
 		 */
+		System.out
+				.println("\n\nMultiple Property with ProjectionList & Criteria");
 		criteria = session.createCriteria(Employee.class);
 		ProjectionList proList = Projections.projectionList();
-		proList.add(Projections.property("firstName")).add(Projections.property("lastName"));
+		proList.add(Projections.property("firstName")).add(
+				Projections.property("lastName"));
 		criteria.setProjection(proList);
 
 		for (Iterator iterator = criteria.list().iterator(); iterator.hasNext();) {
 			Object[] objArray = (Object[]) iterator.next();
-			System.out.println(objArray[0]);
-			System.out.println(objArray[1]);
+			System.out.println("First Name = " + objArray[0]
+					+ "  And Last Name = " + objArray[1]);
 		}
 		sessionFactory.close();
 
@@ -89,6 +116,16 @@ public class LoadManagerForCriteria {
 		 * The DetachedCriteria class allows you to create a query outside the
 		 * scope of a session and then execute it using an arbitrary Session.
 		 */
+
+		DetachedCriteria detCriteria = DetachedCriteria.forClass(
+				EmployeeAddress.class).setProjection(Property.forName("empId"));
+
+		criteria = session.createCriteria(Employee.class);
+
+		proList = Projections.projectionList();
+		proList.add(Projections.property("firstName"))
+				.add(Projections.property("lastName"))
+				.add(Projections.property("salary"));
 
 		System.out.println("Done");
 	}

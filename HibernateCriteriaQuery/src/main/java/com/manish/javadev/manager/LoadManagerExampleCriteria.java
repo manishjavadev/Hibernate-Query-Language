@@ -1,6 +1,5 @@
 package com.manish.javadev.manager;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,10 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 
 import com.manish.javadev.model.Employee;
 import com.manish.javadev.util.HibernateUtil;

@@ -25,19 +25,14 @@ public class Employee {
 	@Column(name = "SALARY")
 	private double salary;
 
-	@Column(name = "CITY")
-	private String city;
-
 	public Employee() {
 	}
 
-	public Employee(String firstName, String lastName, double salary,
-			String city) {
+	public Employee(String firstName, String lastName, double salary) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.salary = salary;
-		this.city = city;
 	}
 
 	public long getId() {
@@ -72,19 +67,10 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", salary=" + salary + ", city="
-				+ city + "]";
+				+ ", lastName=" + lastName + ", salary=" + salary + "]";
 	}
 
 }
