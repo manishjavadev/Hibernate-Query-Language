@@ -111,21 +111,30 @@ public class LoadManagerForCriteria {
 		}
 		sessionFactory.close();
 
-		/*
+		/**
 		 * Detached queries and subqueries
 		 * 
 		 * The DetachedCriteria class allows you to create a query outside the
 		 * scope of a session and then execute it using an arbitrary Session.
 		 */
 
-		DetachedCriteria detCriteria = DetachedCriteria.forClass(EmployeeAddress.class)
-				.setProjection(Property.forName("empId"));
+		/**
+		 * The Below DetachedCriteria and Criteria condition will generate the
+		 * query like that
+		 * 
+		 * Hibernate: select EMP_ID, FIRST_NAME, LAST_NAME, SALARY from EMPLOYEE
+		 * where EMP_ID in (select EMP_ID from ADDRESS)
+		 */
+		DetachedCriteria detCriteria = DetachedCriteria.forClass(
+				EmployeeAddress.class).setProjection(Property.forName("empId"));
 
-		criteria = session.createCriteria(Employee.class);
-
-		list = criteria.add(Subqueries.geAll("id", detCriteria)).list();
-
-		System.out.println("Done");
+		criteria = session.createCriteria(Employee.class)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+				.add(Subqueries.propertyIn("id", detCriteria));
+		list = criteria.list();
+		for (Object object : list) {
+			System.out.println(object);
+		}
 
 		System.out.println("Done");
 	}
