@@ -22,5 +22,7 @@
 		<!-- Mapping resource -->
 		<mapping class="com.manish.javadev.model.Employee" />
 		<mapping class="com.manish.javadev.model.EmployeeAddress" />
+		<mapping class="com.manish.javadev.model.ResultEntity" />
+		<mapping resource="named-queries.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

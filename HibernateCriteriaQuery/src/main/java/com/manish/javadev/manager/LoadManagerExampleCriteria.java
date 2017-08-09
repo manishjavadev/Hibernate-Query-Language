@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 
 import com.manish.javadev.model.Employee;
+import com.manish.javadev.model.EmployeeAddress;
 import com.manish.javadev.util.HibernateUtil;
 
 public class LoadManagerExampleCriteria {
@@ -30,13 +31,20 @@ public class LoadManagerExampleCriteria {
 		 * query
 		 */
 
-		Employee employee = new Employee();
-		employee.setId(new Long(1));
-		employee.setFirstName("Divy1");
-		Example example = Example.create(employee);
-		Criteria criteria = session.createCriteria(Employee.class).add(example);
-		List list = criteria.list();
+		Criteria criteria = session.createCriteria(EmployeeAddress.class);
 
+		EmployeeAddress employee = new EmployeeAddress();
+		employee.setId(1);
+		// employee.setFirstName("Ajay");
+		// employee.setSalary(70000);
+		Example example = Example.create(employee);
+		example.ignoreCase();
+
+		criteria.add(example);
+		List<EmployeeAddress> list = (List<EmployeeAddress>) criteria.list();
+		for (EmployeeAddress emp : list) {
+			System.out.println(emp);
+		}
 		sessionFactory.close();
 
 		System.out.println("Done");

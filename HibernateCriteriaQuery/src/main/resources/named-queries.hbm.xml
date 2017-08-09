@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<query name="ALL_EMPLOYEE_BY_HQL">
+
+		from Employee
+
+	</query>
+
+
+	<!-- SQL Query -->
+	<sql-query name="ALL_EMPLOYEE_BY_SQL">
+		<return alias="Employee" class="com.manish.javadev.model.Employee" /> 
+		<![CDATA[
+		
+		select * from Employee
+		
+		]]>
+	</sql-query>
+
+	<!-- HQL Query -->
+	<query name="EMPLOYEE_BY_ID_HQL">
+		<![CDATA[
+		
+		from Employee where emp_id = :id
+		
+		]]>
+	</query>
+
+	<!-- HQL Query -->
+	<query name="EMPLOYEE_BY_SALARY_HQL">
+		<![CDATA[
+		
+		from Employee where salary > :salary
+		
+		]]>
+	</query>
+
+
+	<!-- SQL Query -->
+	<sql-query name="EMPLOYEE_ADDRESS_JOIN">
+		<return alias="EmpResult" class="com.manish.javadev.model.ResultEntity" />
+	 <![CDATA[
+			Select emp.Emp_Id,emp.First_Name,emp.Last_Name,emp.salary,addr.city 
+			From Employee emp 
+			INNER JOIN Address addr 
+			ON emp.emp_Id=addr.Emp_Id
+		]]>
+	</sql-query>
+
+
+</hibernate-mapping>
