@@ -13,6 +13,7 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 
 import com.manish.javadev.model.Employee;
 import com.manish.javadev.model.EmployeeAddress;
@@ -117,15 +118,14 @@ public class LoadManagerForCriteria {
 		 * scope of a session and then execute it using an arbitrary Session.
 		 */
 
-		DetachedCriteria detCriteria = DetachedCriteria.forClass(
-				EmployeeAddress.class).setProjection(Property.forName("empId"));
+		DetachedCriteria detCriteria = DetachedCriteria.forClass(EmployeeAddress.class)
+				.setProjection(Property.forName("empId"));
 
 		criteria = session.createCriteria(Employee.class);
 
-		proList = Projections.projectionList();
-		proList.add(Projections.property("firstName"))
-				.add(Projections.property("lastName"))
-				.add(Projections.property("salary"));
+		list = criteria.add(Subqueries.geAll("id", detCriteria)).list();
+
+		System.out.println("Done");
 
 		System.out.println("Done");
 	}
