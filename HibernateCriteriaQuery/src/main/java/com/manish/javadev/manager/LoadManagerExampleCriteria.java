@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 
-import com.manish.javadev.model.Employee;
 import com.manish.javadev.model.EmployeeAddress;
 import com.manish.javadev.util.HibernateUtil;
 
