@@ -26,10 +26,6 @@ public class CriteriaProjectionManager {
 		Transaction tx = session.beginTransaction();
 
 		/**
-		 * ===========How to use Projection===========
-		 * 
-		 * 
-		 * 
 		 * What is Projection
 		 * 
 		 * Hibernate Projections are used in order to query only a subset of the
@@ -41,6 +37,13 @@ public class CriteriaProjectionManager {
 		 * which data you're fetching. Like modifying the select clause in an
 		 * SQL query.
 		 * 
+		 */
+
+		/**
+		 * ===========How to use Projection===========
+		 */
+
+		/**
 		 * 
 		 * If you are adding more than one property using set Projection then
 		 * only last added projection will consider
@@ -78,7 +81,6 @@ public class CriteriaProjectionManager {
 			System.out.println("First Name = " + objArray[0]
 					+ "  And Last Name = " + objArray[1]);
 		}
-		sessionFactory.close();
 
 		/**
 		 * Detached queries and subqueries
